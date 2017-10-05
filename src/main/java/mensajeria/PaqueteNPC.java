@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import dominio.Item;
 
-public class PaqueteNPC extends Paquete implements Serializable, Cloneable{
+public class PaqueteNPC extends PaquetePeleable implements Serializable, Cloneable{
 	
 	private int id;
 	private int idMapa;

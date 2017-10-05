@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import dominio.Item;
 import estados.Estado;
 
-public class PaquetePersonaje extends Paquete implements Serializable, Cloneable {
+public class PaquetePersonaje extends PaquetePeleable implements Serializable, Cloneable {
 
 	private int id;
 	private int idMapa;
