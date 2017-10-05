@@ -7,7 +7,7 @@ import dominio.Item;
 
 public class PaqueteNPC extends Paquete implements Serializable, Cloneable{
 	
-	private int id = -1;
+	private int id;
 	private int idMapa;
 	private int salud;
 	private int saludTope;
@@ -17,7 +17,14 @@ public class PaqueteNPC extends Paquete implements Serializable, Cloneable{
 	private int fuerza;
 	private int defensa;
 	private String nombre;
+	private String raza = "NPC";
 	
+	public String getRaza() {
+		return raza;
+	}
+	public void setRaza(String raza) {
+		this.raza = raza;
+	}
 	public int getId() {
 		return id;
 	}

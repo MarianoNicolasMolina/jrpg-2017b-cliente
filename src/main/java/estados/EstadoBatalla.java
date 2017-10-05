@@ -304,8 +304,9 @@ public class EstadoBatalla extends Estado {
 		
 		nombre = ((PaqueteNPC)paqueteEnemigo).getNombre();
 		nivel = ((PaqueteNPC)paqueteEnemigo).getNivel();
+		id = ((PaqueteNPC)paqueteEnemigo).getId();
 		
-		enemigo = new NonPlayableCharacter(nombre, nivel, NonPlayableCharacter.DIFICULTADALEATORIA);		
+		enemigo = new NonPlayableCharacter(id, nombre, nivel, NonPlayableCharacter.DIFICULTADALEATORIA);		
 	}
 
 	public void enviarAtaque(PaqueteAtacar paqueteAtacar) {

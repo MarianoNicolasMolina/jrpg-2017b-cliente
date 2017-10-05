@@ -21,6 +21,7 @@ import juego.Juego;
 import juego.Pantalla;
 import mensajeria.Comando;
 import mensajeria.PaqueteMovimiento;
+import mensajeria.PaqueteNPC;
 import mensajeria.PaquetePersonaje;
 import mundo.Mundo;
 import recursos.Recursos;
@@ -128,6 +129,14 @@ public class EstadoJuego extends Estado {
 		menuEnemigo = new MenuInfoPersonaje(300, 50, enemigo);
 		this.tipoSolicitud = tipoSolicitud;
 	}
+	
+	public void setHaySolicitudNPC(boolean b, PaqueteNPC npc, int tipoSolicitud) {
+		haySolicitud = b;
+		// menu que mostrara al enemigo
+		menuEnemigo = new MenuInfoPersonaje(300, 50, npc);
+		this.tipoSolicitud = tipoSolicitud;
+		
+	}
 
 	public boolean getHaySolicitud() {
 		return haySolicitud;
@@ -149,5 +158,4 @@ public class EstadoJuego extends Estado {
 	public boolean esEstadoDeJuego() {
 		return true;
 	}
-
 }

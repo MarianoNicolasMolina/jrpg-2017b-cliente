@@ -274,6 +274,8 @@ public class Entidad {
 				int []tileMoverme = Mundo.mouseATile(posMouse[0] + juego.getCamara().getxOffset() - 
 						xOffset,posMouse[1] + juego.getCamara().getyOffset() - yOffset);
 				PaqueteMovimiento actual;
+				
+				boolean actualEsPersonaje = false;
 
 				while (it.hasNext()) {
 					key = it.next();
@@ -284,6 +286,8 @@ public class Entidad {
 									getIdPersonaje()) != null
 							&& juego.getPersonajesConectados().get(actual.
 									getIdPersonaje()).getEstado() == Estado.estadoJuego) {
+						
+						actualEsPersonaje = true;
 
 						if (tileMoverme[0] == tilePersonajes[0] && tileMoverme[1] == 
 								tilePersonajes[1]) {
@@ -304,6 +308,27 @@ public class Entidad {
 										menuBatallar);		
 							}
 							juego.getHandlerMouse().setNuevoClick(false);
+						}
+					}
+				}
+				
+				if(!actualEsPersonaje)
+				{
+					it = juego.getUbicacionNpcs().keySet().iterator();
+					while(it.hasNext())
+					{
+						key = it.next();
+						actual = juego.getUbicacionNpcs().get(key);
+						if(actual != null && actual.getIdPersonaje() != juego.getPersonaje().getId() && juego.getNpcsSpawneados().get(actual.getIdPersonaje()) != null)
+						{
+							if (tileMoverme[0] == tilePersonajes[0] && tileMoverme[1] == 
+									tilePersonajes[1]) {
+								idEnemigo = actual.getIdPersonaje();
+								// SETEO QUE SE ABRA EL MENU DE BATALLA
+								juego.getEstadoJuego().setHaySolicitudNPC(true,juego.getNpcsSpawneados().get(idEnemigo), MenuInfoPersonaje.menuBatallar);		
+								
+								juego.getHandlerMouse().setNuevoClick(false);
+							}
 						}
 					}
 				}
