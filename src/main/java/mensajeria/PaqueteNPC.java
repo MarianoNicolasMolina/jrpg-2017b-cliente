@@ -1,24 +1,30 @@
 package mensajeria;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import dominio.Item;
+import estados.Estado;
 
 public class PaqueteNPC extends PaquetePeleable implements Serializable, Cloneable{
 	
-	private int id;
-	private int idMapa;
-	private int salud;
-	private int saludTope;
-	private int energia;
-	private int energiaTope;
-	private int nivel;
-	private int fuerza;
-	private int defensa;
-	private String nombre;
-	private String raza = "NPC";
 	
+	private int defensa;
+	
+	public PaqueteNPC() throws IOException {
+		raza = "NPC";
+		estado = Estado.estadoOffline;
+	}
+	
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
 	public String getRaza() {
 		return raza;
 	}
@@ -37,23 +43,11 @@ public class PaqueteNPC extends PaquetePeleable implements Serializable, Cloneab
 	public void setIdMapa(int idMapa) {
 		this.idMapa = idMapa;
 	}
-	public int getSalud() {
-		return salud;
-	}
-	public void setSalud(int salud) {
-		this.salud = salud;
-	}
 	public int getSaludTope() {
 		return saludTope;
 	}
 	public void setSaludTope(int saludTope) {
 		this.saludTope = saludTope;
-	}
-	public int getEnergia() {
-		return energia;
-	}
-	public void setEnergia(int energia) {
-		this.energia = energia;
 	}
 	public int getEnergiaTope() {
 		return energiaTope;
