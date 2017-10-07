@@ -51,7 +51,7 @@ public class Juego implements Runnable {
 	private Map<Integer, PaquetePersonaje> personajesConectados;
 	private Map<Integer, PaqueteMovimiento> ubicacionPersonajes;
 	private Map<Integer, PaqueteNPC> npcsSpawneados;
-	private Map<Integer, PaqueteMovimiento> ubicacionNpcs;
+	private Map<Integer, PaqueteMovimiento> ubicacionNPCs;
 	private Map<String, MiChat> chatsActivos = new HashMap<>();
 
 
@@ -256,12 +256,12 @@ public class Juego implements Runnable {
 		this.npcsSpawneados = npcsSpawneados;
 	}
 
-	public Map<Integer, PaqueteMovimiento> getUbicacionNpcs() {
-		return ubicacionNpcs;
+	public Map<Integer, PaqueteMovimiento> getUbicacionNPCs() {
+		return ubicacionNPCs;
 	}
 
-	public void setUbicacionNpcs(Map<Integer, PaqueteMovimiento> ubicacionNpcs) {
-		this.ubicacionNpcs = ubicacionNpcs;
+	public void setUbicacionNPCs(Map<Integer, PaqueteMovimiento> ubicacionNPCs) {
+		this.ubicacionNPCs = ubicacionNPCs;
 	}
 
 	public Map<String, MiChat> getChatsActivos() {

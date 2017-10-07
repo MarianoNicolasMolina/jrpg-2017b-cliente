@@ -167,24 +167,33 @@ public class EstadoBatalla extends Estado {
 							juego.getEstadoJuego().setHaySolicitud(true, juego.getPersonaje(), MenuInfoPersonaje.menuSubirNivel);
 						}
 						paqueteFinalizarBatalla.setGanadorBatalla(juego.getPersonaje().getId());
-						finalizarBatalla();
+						finalizarBatalla(false); // Si bien gano este personaje, ese false indica que ese personahje que gano no es npc.
 						Estado.setEstado(juego.getEstadoJuego());
 						
 					} else {
 						if(enemigoEsNPC)
-						{
-							paqueteAtacar = new PaqueteAtacar(paquetePersonaje.getId(), ((PaqueteNPC)paqueteEnemigo).getId(), personaje.getSalud(), personaje.getEnergia(), enemigo.getSalud(), 100, personaje.getDefensa(), enemigo.getDefensa(), personaje.getCasta().getProbabilidadEvitarDaño(), 0);
+						{							
 							enemigo.atacar(personaje); // En este punto, el atacante ya le pego al NPC. Por lo tanto, mando al NPC a atacarlo a él. //
-							paqueteAtacar = new PaqueteAtacar(paquetePersonaje.getId(), ((PaquetePersonaje)paqueteEnemigo).getId(), personaje.getSalud(), personaje.getEnergia(), enemigo.getSalud(), ((Personaje)enemigo).getEnergia(), personaje.getDefensa(), ((Personaje)enemigo).getDefensa(), personaje.getCasta().getProbabilidadEvitarDaño(), ((Personaje)enemigo).getCasta().getProbabilidadEvitarDaño());
+							if(personaje.estaVivo())
+							{
+								paqueteAtacar = new PaqueteAtacar(paquetePersonaje.getId(), ((PaquetePersonaje)paqueteEnemigo).getId(), personaje.getSalud(), personaje.getEnergia(), enemigo.getSalud(), ((Personaje)enemigo).getEnergia(), personaje.getDefensa(), ((Personaje)enemigo).getDefensa(), personaje.getCasta().getProbabilidadEvitarDaño(), ((Personaje)enemigo).getCasta().getProbabilidadEvitarDaño());
+								enviarAtaque(paqueteAtacar);
+							}
+							else
+							{
+								paqueteFinalizarBatalla.setGanadorBatalla(((PaqueteNPC)paqueteEnemigo).getId());
+								finalizarBatalla(true);
+								Estado.setEstado(juego.getEstadoJuego());
+							}
 						}
 						else
 						{
 							paqueteAtacar = new PaqueteAtacar(paquetePersonaje.getId(), ((PaquetePersonaje)paqueteEnemigo).getId(), personaje.getSalud(), personaje.getEnergia(), enemigo.getSalud(), ((Personaje)enemigo).getEnergia(), personaje.getDefensa(), ((Personaje)enemigo).getDefensa(), personaje.getCasta().getProbabilidadEvitarDaño(), ((Personaje)enemigo).getCasta().getProbabilidadEvitarDaño());
 							miTurno = false;
+							enviarAtaque(paqueteAtacar);
+							menuBatalla.setHabilitado(false);
 						}
 						
-						enviarAtaque(paqueteAtacar);
-						menuBatalla.setHabilitado(false);
 					}
 				} else if(haySpellSeleccionada && !seRealizoAccion){
 					JOptionPane.showMessageDialog(null, "No posees la energía suficiente para realizar esta habilidad.");
@@ -205,7 +214,7 @@ public class EstadoBatalla extends Estado {
 
 		if(enemigoEsNPC)
 		{
-			g.drawImage(Recursos.enemigoNPC, 550, 75, 256, 256, null);
+			g.drawImage(Recursos.enemigoNPC, 0, 0, 63, 50, null);
 		}
 		else
 		{
@@ -317,7 +326,7 @@ public class EstadoBatalla extends Estado {
 		}
 	}
 
-	private void finalizarBatalla() {
+	private void finalizarBatalla(boolean ganoNPC) {
 		try {
 			juego.getCliente().getSalida().writeObject(gson.toJson(paqueteFinalizarBatalla));
 
@@ -330,12 +339,9 @@ public class EstadoBatalla extends Estado {
 			paquetePersonaje.setInteligencia(personaje.getInteligencia());
 			paquetePersonaje.removerBonus();
 			
-			if(enemigoEsNPC)
+			if(enemigoEsNPC && !ganoNPC) // En el caso de que el enemigo sea npc y haya ganado la pelea, sus atributos continuan iguales.
 			{
-				((PaqueteNPC)paqueteEnemigo).setSaludTope(enemigo.getSaludTope());
-				((PaqueteNPC)paqueteEnemigo).setEnergiaTope(enemigo.getEnergiaTope());
-				((PaqueteNPC)paqueteEnemigo).setNivel(enemigo.getNivel());
-				((PaqueteNPC)paqueteEnemigo).setFuerza(enemigo.getFuerza());
+				// Hay qye borrar ese npc del mapa, sacarlo del HashMap de npcsSpawneados de la clase JUego y tambien borrar este Hash de la clase Server. 
 			}
 			else
 			{

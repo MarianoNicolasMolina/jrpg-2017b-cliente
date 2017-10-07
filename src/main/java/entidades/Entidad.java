@@ -314,11 +314,11 @@ public class Entidad {
 				
 				if(!actualEsPersonaje)
 				{
-					it = juego.getUbicacionNpcs().keySet().iterator();
+					it = juego.getUbicacionNPCs().keySet().iterator();
 					while(it.hasNext())
 					{
 						key = it.next();
-						actual = juego.getUbicacionNpcs().get(key);
+						actual = juego.getUbicacionNPCs().get(key);
 						if(actual != null && actual.getIdPersonaje() != juego.getPersonaje().getId() && juego.getNpcsSpawneados().get(actual.getIdPersonaje()) != null)
 						{
 							if (tileMoverme[0] == tilePersonajes[0] && tileMoverme[1] == 
