@@ -40,6 +40,10 @@ public class EstadoJuego extends Estado {
 	private boolean haySolicitud;
 	private int tipoSolicitud;
 	
+	private static final int aubenor = 1;
+	private static final int aris = 2;
+	private static final int eodrim = 3;
+	
 	// NPCs
 	private NpcManager npcManager;
 
@@ -144,11 +148,11 @@ public class EstadoJuego extends Estado {
 		int mundo = juego.getPersonaje().getMapa();
 
 		switch(mundo) {
-			case 1:
+			case aubenor:
 				return "Aubenor";
-			case 2:
+			case aris:
 				return "Aris";
-			case 3:
+			case eodrim:
 				return "Eodrim";
 			default:
 				return null;
