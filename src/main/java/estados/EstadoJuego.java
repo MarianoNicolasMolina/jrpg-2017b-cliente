@@ -143,15 +143,16 @@ public class EstadoJuego extends Estado {
 	private String getMundo() {
 		int mundo = juego.getPersonaje().getMapa();
 
-		if (mundo == 1) {
-			return "Aubenor";
-		} else if (mundo == 2) {
-			return "Aris";
-		} else if (mundo == 3) {
-			return "Eodrim";
+		switch(mundo) {
+			case 1:
+				return "Aubenor";
+			case 2:
+				return "Aris";
+			case 3:
+				return "Eodrim";
+			default:
+				return null;
 		}
-
-		return null;
 	}
 
 	public void setHaySolicitud(boolean b, Paquete enemigo, int tipoSolicitud) 

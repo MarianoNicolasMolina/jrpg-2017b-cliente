@@ -563,25 +563,26 @@ public class Entidad {
 	/**Obtiene el frameActual de la entidad
 	 */
 	private BufferedImage getFrameAnimacionActual() {
-		if (movimientoHacia == horizontalIzq) {
-			return moverIzq.getFrameActual();
-		} else if (movimientoHacia == horizontalDer) {
-			return moverDer.getFrameActual();
-		} else if (movimientoHacia == verticalSup) {
-			return moverArriba.getFrameActual();
-		} else if (movimientoHacia == verticalInf) {
-			return moverAbajo.getFrameActual();
-		} else if (movimientoHacia == diagonalInfIzq) {
-			return moverAbajoIzq.getFrameActual();
-		} else if (movimientoHacia == diagonalInfDer) {
-			return moverAbajoDer.getFrameActual();
-		} else if (movimientoHacia == diagonalSupIzq) {
-			return moverArribaIzq.getFrameActual();
-		} else if (movimientoHacia == diagonalSupDer) {
-			return moverArribaDer.getFrameActual();
+		switch(movimientoHacia) {
+			case horizontalIzq:
+				return moverIzq.getFrameActual();
+			case horizontalDer:
+				return moverDer.getFrameActual();
+			case verticalSup:
+				return moverArriba.getFrameActual();
+			case verticalInf:
+				return moverAbajo.getFrameActual();
+			case diagonalInfIzq:
+				return moverAbajoIzq.getFrameActual();
+			case diagonalInfDer:
+				return moverAbajoDer.getFrameActual();
+			case diagonalSupIzq:
+				return moverArribaIzq.getFrameActual();
+			case diagonalSupDer:
+				return moverArribaDer.getFrameActual();
+			default:
+				return Recursos.orco.get(6)[0];
 		}
-
-		return Recursos.orco.get(6)[0];
 	}
 	
 	/**Pide la direccion donde va
@@ -601,25 +602,27 @@ public class Entidad {
 	/**Obtiene el frame donde esta el personaje
 	 */
 	private int getFrame() {
-		if (movimientoHacia == horizontalIzq) {
-			return moverIzq.getFrame();
-		} else if (movimientoHacia == horizontalDer) {
-			return moverDer.getFrame();
-		} else if (movimientoHacia == verticalSup) {
-			return moverArriba.getFrame();
-		} else if (movimientoHacia == verticalInf) {
-			return moverAbajo.getFrame();
-		} else if (movimientoHacia == diagonalInfIzq) {
-			return moverAbajoIzq.getFrame();
-		} else if (movimientoHacia == diagonalInfDer) {
-			return moverAbajoDer.getFrame();
-		} else if (movimientoHacia == diagonalSupIzq) {
-			return moverArribaIzq.getFrame();
-		} else if (movimientoHacia == diagonalSupDer) {
-			return moverArribaDer.getFrame();
+		
+		switch(movimientoHacia) {
+			case horizontalIzq:
+				return moverIzq.getFrame();
+			case horizontalDer:
+				return moverDer.getFrame();
+			case verticalSup:
+				return moverArriba.getFrame();
+			case verticalInf:
+				return moverAbajo.getFrame();
+			case diagonalInfIzq:
+				return moverAbajoIzq.getFrame();
+			case diagonalInfDer:
+				return moverAbajoDer.getFrame();
+			case diagonalSupIzq:
+				return moverArribaIzq.getFrame();
+			case diagonalSupDer:
+				return moverArribaDer.getFrame();
+			default:
+				return 0;
 		}
-
-		return 0;
 	}
 	/**Envia la posicion de la entidad
 	 */
