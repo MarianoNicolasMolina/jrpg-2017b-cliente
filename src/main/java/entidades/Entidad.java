@@ -5,8 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 
@@ -65,6 +67,8 @@ public class Entidad {
 	private static final int diagonalSupIzq = 1;
 	private int movimientoHacia = 6;
 	private boolean enMovimiento;
+	
+	private Map<Integer,Animacion> animaciones;
 
 	// Animaciones
 	private final Animacion moverIzq;
@@ -131,6 +135,8 @@ public class Entidad {
 		moverAbajoDer = new Animacion(velAnimacion, animaciones.get(5));
 		moverAbajo = new Animacion(velAnimacion, animaciones.get(6));
 		moverAbajoIzq = new Animacion(velAnimacion, animaciones.get(7));
+		
+		this.inicializarMapaAnimaciones();
 
 		// Informo mi posicion actual
 		juego.getUbicacionPersonaje().setPosX(x);
@@ -563,26 +569,25 @@ public class Entidad {
 	/**Obtiene el frameActual de la entidad
 	 */
 	private BufferedImage getFrameAnimacionActual() {
-		switch(movimientoHacia) {
-			case horizontalIzq:
-				return moverIzq.getFrameActual();
-			case horizontalDer:
-				return moverDer.getFrameActual();
-			case verticalSup:
-				return moverArriba.getFrameActual();
-			case verticalInf:
-				return moverAbajo.getFrameActual();
-			case diagonalInfIzq:
-				return moverAbajoIzq.getFrameActual();
-			case diagonalInfDer:
-				return moverAbajoDer.getFrameActual();
-			case diagonalSupIzq:
-				return moverArribaIzq.getFrameActual();
-			case diagonalSupDer:
-				return moverArribaDer.getFrameActual();
-			default:
-				return Recursos.orco.get(6)[0];
-		}
+		
+		Animacion animacionActual = animaciones.get(movimientoHacia);
+		
+		if(animacionActual == null)
+			return Recursos.orco.get(6)[0];
+		else
+			return animacionActual.getFrameActual();
+	}
+	
+	private void  inicializarMapaAnimaciones() {
+		animaciones = new HashMap<Integer,Animacion>();
+		animaciones.put(horizontalIzq, moverIzq);
+		animaciones.put(horizontalDer,moverDer);
+		animaciones.put(verticalSup,moverArriba);
+		animaciones.put(verticalInf, moverAbajo);
+		animaciones.put(diagonalInfIzq, moverAbajoIzq);
+		animaciones.put(diagonalInfDer, moverAbajoDer);
+		animaciones.put(diagonalSupIzq, moverArribaIzq);
+		animaciones.put(diagonalSupDer, moverArribaDer);
 	}
 	
 	/**Pide la direccion donde va
@@ -603,26 +608,12 @@ public class Entidad {
 	 */
 	private int getFrame() {
 		
-		switch(movimientoHacia) {
-			case horizontalIzq:
-				return moverIzq.getFrame();
-			case horizontalDer:
-				return moverDer.getFrame();
-			case verticalSup:
-				return moverArriba.getFrame();
-			case verticalInf:
-				return moverAbajo.getFrame();
-			case diagonalInfIzq:
-				return moverAbajoIzq.getFrame();
-			case diagonalInfDer:
-				return moverAbajoDer.getFrame();
-			case diagonalSupIzq:
-				return moverArribaIzq.getFrame();
-			case diagonalSupDer:
-				return moverArribaDer.getFrame();
-			default:
-				return 0;
-		}
+		Animacion animacion = animaciones.get(movimientoHacia);
+		
+		if(animacion == null)
+			return 0;
+		else
+			return animacion.getFrame();
 	}
 	/**Envia la posicion de la entidad
 	 */
