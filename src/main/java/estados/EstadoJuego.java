@@ -18,6 +18,7 @@ import entidades.Entidad;
 import interfaz.EstadoDePersonaje;
 import interfaz.MenuInfoNpc;
 import interfaz.MenuInfoPersonaje;
+import jdk.nashorn.internal.ir.GetSplitState;
 import juego.Juego;
 import juego.NpcManager;
 import juego.Pantalla;
@@ -39,11 +40,6 @@ public class EstadoJuego extends Estado {
 	private Map<Integer, PaquetePersonaje> personajesConectados;
 	private boolean haySolicitud;
 	private int tipoSolicitud;
-	
-	private static final int aubenor = 1;
-	private static final int aris = 2;
-	private static final int eodrim = 3;
-	
 	// NPCs
 	private NpcManager npcManager;
 
@@ -52,9 +48,19 @@ public class EstadoJuego extends Estado {
 	private BufferedImage miniaturaPersonaje;
 
 	MenuInfoPersonaje menuEnemigo;
+	//Mundos
+	private static final int aubenor = 1;
+	private static final int aris = 2;
+	private static final int eodrim = 3;
+	private Map<Integer,String> mundos;
+	
+	
 
 	public EstadoJuego(Juego juego) throws IOException {
 		super(juego);
+		//Inicializo el map de mundos
+		this.inicializarMundos();
+		
 		mundo = new Mundo(juego, "recursos/" + getMundo() + ".txt", "recursos/" + getMundo() + ".txt");
 		paquetePersonaje = juego.getPersonaje();
 		entidadPersonaje = new Entidad(juego, mundo, 64, 64, juego.getPersonaje().getNombre(), 0, 0, Recursos.personaje.get(juego.getPersonaje().getRaza()), 150);
@@ -87,6 +93,7 @@ public class EstadoJuego extends Estado {
 			JOptionPane.showMessageDialog(null, "Fallo la conexión con el servidor al ingresar al mundo");
 		}
 	}
+
 
 	@Override
 	public void actualizar() {
@@ -143,20 +150,16 @@ public class EstadoJuego extends Estado {
 	public Entidad getPersonaje() {
 		return entidadPersonaje;
 	}
+	
+	private void inicializarMundos() {
+		mundos = new HashMap<Integer,String>();
+		mundos.put(aubenor, "Aubenor");
+		mundos.put(aris, "Aris");
+		mundos.put(eodrim, "Eodrim");
+	}
 
 	private String getMundo() {
-		int mundo = juego.getPersonaje().getMapa();
-
-		switch(mundo) {
-			case aubenor:
-				return "Aubenor";
-			case aris:
-				return "Aris";
-			case eodrim:
-				return "Eodrim";
-			default:
-				return null;
-		}
+		return mundos.get(juego.getPersonaje().getMapa());		
 	}
 
 	public void setHaySolicitud(boolean b, Paquete enemigo, int tipoSolicitud) 
